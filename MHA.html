@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Assessment</title>
+    <link href="https://cdn.jsdelivr.net/npm/lucide-static@0.16.40/font/lucide.css" rel="stylesheet">
+    <style>
+        :root {
+            --gray-900: #111827;
+            --gray-800: #1f2937;
+            --gray-700: #374151;
+            --gray-600: #4b5563;
+            --gray-500: #6b7280;
+            --gray-400: #9ca3af;
+            --gray-300: #d1d5db;
+            --gray-200: #e5e7eb;
+            --gray-100: #f3f4f6;
+            --blue-700: #1d4ed8;
+            --blue-600: #2563eb;
+            --blue-500: #3b82f6;
+            --blue-400: #60a5fa;
+            --purple-500: #8b5cf6;
+            --green-500: #10b981;
+            --yellow-500: #eab308;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--gray-900);
+            color: var(--gray-100);
+            line-height: 1.5;
+        }
+
+        .container {
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .max-w-2xl {
+            max-width: 42rem;
+        }
+
+        .max-w-3xl {
+            max-width: 48rem;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        header {
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.125rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--blue-400);
+        }
+
+        .text-gray-400 {
+            color: var(--gray-400);
+        }
+
+        .text-gray-300 {
+            color: var(--gray-300);
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: var(--gray-700);
+            height: 0.5rem;
+            border-radius: 9999px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--blue-500);
+            border-radius: 9999px;
+            transition: width 0.3s ease;
+        }
+
+        .card {
+            background-color: var(--gray-800);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background-color: var(--gray-700);
+        }
+
+        .option:hover {
+            background-color: var(--gray-600);
+        }
+
+        .option.selected {
+            background-color: var(--blue-600);
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background-color: var(--blue-600);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--blue-700);
+        }
+
+        .btn-secondary {
+            background-color: var(--gray-700);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--gray-600);
+        }
+
+        .btn:disabled {
+            background-color: var(--gray-700);
+            color: var(--gray-500);
+            cursor: not-allowed;
+        }
+
+        .icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.5rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .score-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .score-value {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .depression-bar {
+            background-color: var(--purple-500);
+        }
+
+        .anxiety-bar {
+            background-color: var(--green-500);
+        }
+
+        .recommendation {
+            margin-bottom: 1.5rem;
+        }
+
+        .tips-list {
+            list-style-type: disc;
+            padding-left: 1.25rem;
+        }
+
+        .tips-list li {
+            margin-bottom: 0.25rem;
+        }
+
+        textarea {
+            width: 100%;
+            background-color: var(--gray-700);
+            color: var(--gray-100);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            border: none;
+            resize: vertical;
+            min-height: 8rem;
+        }
+
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--blue-500);
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .action-buttons {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            justify-content: center;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 3rem;
+            height: 3rem;
+            border: 2px solid var(--gray-700);
+            border-radius: 50%;
+            border-top-color: var(--blue-500);
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .mb-3 {
+            margin-bottom: 0.75rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .space-y-3 > * + * {
+            margin-top: 0.75rem;
+        }
+
+        .space-y-6 > * + * {
+            margin-top: 1.5rem;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .border-l-4 {
+            border-left-width: 4px;
+        }
+
+        .border-blue-500 {
+            border-color: var(--blue-500);
+        }
+
+        .pl-4 {
+            padding-left: 1rem;
+        }
+
+        .py-1 {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <div id="loading-state" class="flex items-center justify-center min-h-screen">
+            <div class="text-center">
+                <div class="loading-spinner"></div>
+                <p>Loading assessment questions...</p>
+            </div>
+        </div>
+
+        <div id="assessment-container" class="hidden">
+            <div class="max-w-2xl mx-auto">
+                <header class="mb-8">
+                    <h1>Mental Health Assessment</h1>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                    <p class="text-gray-400" id="progress-text">Question 1 of 10</p>
+                </header>
+                
+                <div class="card">
+                    <h2 id="question-text">How often have you felt overwhelmed by your responsibilities in the past two weeks?</h2>
+                    
+                    <div class="options-container space-y-3" id="options-container"></div>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button id="prev-btn" class="btn btn-secondary" disabled>
+                        <i class="icon" data-feather="arrow-left"></i>
+                        Previous
+                    </button>
+                    
+                    <button id="next-btn" class="btn btn-primary">
+                        Next
+                        <i class="icon" data-feather="arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="results-container" class="hidden max-w-3xl mx-auto">
+            <header class="mb-8 text-center">
+                <h1>Your Assessment Results</h1>
+                <p class="text-gray-400">Thank you for completing the assessment</p>
+            </header>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="card">
+                    <h2>Score Summary</h2>
+                    <div class="score-summary">
+                        <div class="score-item">
+                            <span>Depression Score:</span>
+                            <span class="score-value" id="depression-score">0/30</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar depression-bar" id="depression-bar"></div>
+                        </div>
+                        
+                        <div class="score-item">
+                            <span>Anxiety Score:</span>
+                            <span class="score-value" id="anxiety-score">0/30</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar anxiety-bar" id="anxiety-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h2>Score Visualization</h2>
+                    <div id="chart-container" style="height: 200px;"></div>
+                </div>
+            </div>
+            
+            <div class="card mb-8">
+                <h2>Personalized Recommendations</h2>
+                <div class="space-y-6" id="recommendations-container"></div>
+            </div>
+            
+            <div class="card mb-8">
+                <h2 class="flex items-center">
+                    <i class="icon" data-feather="book-open"></i>
+                    Professional Disclaimer
+                </h2>
+                <p class="text-gray-300">
+                    This assessment is not a diagnostic tool. It is designed to provide general information about your mental health and well-being. The results should not be considered as a substitute for professional medical advice, diagnosis, or treatment. If you are experiencing significant distress or have concerns about your mental health, please consult with a qualified healthcare provider or mental health professional.
+                </p>
+            </div>
+            
+            <div class="card mb-8">
+                <h2>Daily Inspiration</h2>
+                <blockquote class="italic text-gray-300 border-l-4 border-blue-500 pl-4 py-1" id="quote-text">
+                    The greatest glory in living lies not in never falling, but in rising every time we fall. – Nelson Mandela
+                </blockquote>
+            </div>
+            
+            <div class="card mb-8">
+                <h2>Express Your Feelings</h2>
+                <p class="text-gray-400 mb-3">Your journal entries are private and stored only in your browser.</p>
+                <textarea id="journal-entry" placeholder="Write your thoughts here..."></textarea>
+            </div>
+            
+            <div class="action-buttons">
+                <button id="download-btn" class="btn btn-primary btn-lg">
+                    <i class="icon" data-feather="download"></i>
+                    Download Report (PDF)
+                </button>
+                
+                <button id="restart-btn" class="btn btn-secondary btn-lg">
+                    <i class="icon" data-feather="refresh-cw"></i>
+                    Start Over
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/recharts@2.1.12/umd/Recharts.min.js"></script>
+    <script>
+        // Questions database
+        const questionsDatabase = [
+            {
+                id: 1,
+                question: "How often have you felt overwhelmed by your responsibilities in the past two weeks?",
+                options: [
+                    { text: "Not at all", depressionWeight: 0, anxietyWeight: 0 },
+                    { text: "Several days", depressionWeight: 1, anxietyWeight: 1 },
+                    { text: "More than half the days", depressionWeight: 2, anxietyWeight: 2 },
+                    { text: "Nearly every day", depressionWeight: 3, anxietyWeight: 3 }
+                ]
+            },
+            {
+                id: 2,
+                question: "How would you rate your energy levels throughout the day?",
+                options: [
+                    { text: "Consistently high", depressionWeight: 0, anxietyWeight: 0 },
+                    { text: "Moderate with some fluctuation", depressionWeight: 1, anxietyWeight: 1 },
+                    { text: "Low with occasional bursts", depressionWeight: 2, anxietyWeight: 1 },
+                    { text: "Constantly depleted", depressionWeight: 3, anxietyWeight: 2 }
+                ]
+            },
+            {
+                id: 3,
+                question: "How often do you find yourself worrying about future events?",
+                options: [
+                    { text: "Rarely or never", depressionWeight: 0, anxietyWeight: 0 },
+                    { text: "Occasionally", depressionWeight: 0, anxietyWeight: 1 },
+                    { text: "Frequently", depressionWeight: 1, anxietyWeight: 2 },
+                    { text: "Almost constantly", depressionWeight: 2, anxietyWeight: 3 }
+                ]
+            },
+            {
+                id: 4,
+                question: "How would you describe your sleep pattern recently?",
+                options: [
+                    { text: "Regular and restful", depressionWeight: 0, anxietyWeight: 0 },
+                    { text: "Occasional difficulty", depressionWeight: 1, anxietyWeight: 1 },
+                    { text: "Frequently disrupted", depressionWeight: 2, anxietyWeight: 2 },
+                    { text: "Severe insomnia or excessive sleeping", depressionWeight: 3, anxietyWeight: 2 }
+                ]
+            },
+            {
+                id: 5,
+                question: "How often do you experience physical symptoms of stress (headaches, muscle tension, etc.)?",
+                options: [
+                    { text: "Rarely or never", depressionWeight: 0, anxietyWeight: 0 },
+                    { text: "Occasionally", depressionWeight: 0, anxietyWeight: 1 },
+                    { text: "Weekly", depressionWeight: 1, anxietyWeight: 2 },
+                    { text: "Daily", depressionWeight: 2, anxietyWeight: 3 }
+                ]
+            },
+            {
+                id: 6,
+                question: "How would you rate your ability to concentrate on tasks?",
+                options: [
+                    { text: "Excellent", depressionWeight: 0, anxietyWeight: 0 },
+                    { text: "Good with minor distractions", depressionWeight: 1, anxietyWeight: 1 },
+                    { text: "Difficult with frequent distractions", depressionWeight: 2, anxietyWeight: 2 },
+                    { text: "Very poor concentration", depressionWeight: 3, anxietyWeight: 2 }
+                ]
+            },
+            {
+                id: 7,
+                question: "How often do you feel a sense of hopelessness about the future?",
+                options: [
+                    { text: "Never", depressionWeight: 0, anxietyWeight: 0 },
+                    { text: "Occasionally", depressionWeight: 1, anxietyWeight: 1 },
+                    { text: "Frequently", depressionWeight: 2, anxietyWeight: 1 },
+                    { text: "Most of the time", depressionWeight: 3, anxietyWeight: 2 }
+                ]
+            },
+            {
+                id: 8,
+                question: "How would you describe your interest in activities you usually enjoy?",
+                options: [
+                    { text: "Strong interest and enjoyment", depressionWeight: 0, anxietyWeight: 0 },
+                    { text: "Somewhat interested", depressionWeight: 1, anxietyWeight: 0 },
+                    { text: "Limited interest", depressionWeight: 2, anxietyWeight: 1 },
+                    { text: "No interest or enjoyment", depressionWeight: 3, anxietyWeight: 1 }
+                ]
+            },
+            {
+                id: 9,
+                question: "How often do you experience racing thoughts or difficulty controlling worry?",
+                options: [
+                    { text: "Rarely or never", depressionWeight: 0, anxietyWeight: 0 },
+                    { text: "Occasionally", depressionWeight: 0, anxietyWeight: 1 },
+                    { text: "Frequently", depressionWeight: 1, anxietyWeight: 2 },
+                    { text: "Almost constantly", depressionWeight: 1, anxietyWeight: 3 }
+                ]
+            },
+            {
+                id: 10,
+                question: "How would you rate your overall mood on most days?",
+                options: [
+                    { text: "Generally positive", depressionWeight: 0, anxietyWeight: 0 },
+                    { text: "Neutral", depressionWeight: 1, anxietyWeight: 1 },
+                    { text: "Mildly negative", depressionWeight: 2, anxietyWeight: 1 },
+                    { text: "Predominantly negative", depressionWeight: 3, anxietyWeight: 2 }
+                ]
+            }
+        ];
+
+        // Motivational quotes
+        const motivationalQuotes = [
+            "The greatest glory in living lies not in never falling, but in rising every time we fall. – Nelson Mandela",
+            "The way to get started is to quit talking and begin doing. – Walt Disney",
+            "Your time is limited, don't waste it living someone else's life. – Steve Jobs",
+            "If life were predictable it would cease to be life, and be without flavor. – Eleanor Roosevelt",
+            "Spread love everywhere you go. Let no one ever come to you without leaving happier. – Mother Teresa",
+            "When you reach the end of your rope, tie a knot in it and hang on. – Franklin D. Roosevelt",
+            "Always remember that you are absolutely unique. Just like everyone else. – Margaret Mead",
+            "The future belongs to those who believe in the beauty of their dreams. – Eleanor Roosevelt",
+            "You will face many defeats in life, but never let yourself be defeated. – Maya Angelou",
+            "In the middle of difficulty lies opportunity. – Albert Einstein"
+        ];
+
+        // App state
+        const state = {
+            currentStep: 0,
+            questions: [],
+            responses: {},
+            assessmentComplete: false,
+            results: { depression: 0, anxiety: 0 },
+            journalEntry: ""
+        };
+
+        // DOM elements
+        const elements = {
+            loadingState: document.getElementById('loading-state'),
+            assessmentContainer: document.getElementById('assessment-container'),
+            resultsContainer: document.getElementById('results-container'),
+            progressBar: document.getElementById('progress-bar'),
+            progressText: document.getElementById('progress-text'),
+            questionText: document.getElementById('question-text'),
+            optionsContainer: document.getElementById('options-container'),
+            prevBtn: document.getElementById('prev-btn'),
+            nextBtn: document.getElementById('next-btn'),
+            depressionScore: document.getElementById('depression-score'),
+            anxietyScore: document.getElementById('anxiety-score'),
+            depressionBar: document.getElementById('depression-bar'),
+            anxietyBar: document.getElementById('anxiety-bar'),
+            chartContainer: document.getElementById('chart-container'),
+            recommendationsContainer: document.getElementById('recommendations-container'),
+            quoteText: document.getElementById('quote-text'),
+            journalEntry: document.getElementById('journal-entry'),
+            downloadBtn: document.getElementById('download-btn'),
+            restartBtn: document.getElementById('restart-btn')
+        };
+
+        // Reset state and generate new assessment
+        function resetStateAndGenerateAssessment() {
+            state.currentStep = 0;
+            state.responses = {};
+            state.assessmentComplete = false;
+            state.results = { depression: 0, anxiety: 0 };
+            state.questions = [...questionsDatabase].sort(() => 0.5 - Math.random()).slice(0, 10);
+            localStorage.removeItem('mhAssessmentProgress');
+        }
+
+        // Initialize the app
+        function init() {
+            feather.replace();
+            
+            // Always generate a fresh assessment on init
+            resetStateAndGenerateAssessment();
+            
+            // Load saved journal entry if exists
+            const savedJournal = localStorage.getItem('mhJournalEntry');
+            if (savedJournal) {
+                state.journalEntry = savedJournal;
+                elements.journalEntry.value = savedJournal;
+            }
+            
+            elements.quoteText.textContent = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+            
+            setTimeout(() => {
+                elements.loadingState.classList.add('hidden');
+                elements.assessmentContainer.classList.remove('hidden');
+                renderQuestion();
+            }, 1000);
+            
+            setupEventListeners();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            elements.prevBtn.addEventListener('click', handlePrevious);
+            elements.nextBtn.addEventListener('click', handleNext);
+            elements.journalEntry.addEventListener('input', (e) => {
+                state.journalEntry = e.target.value;
+                localStorage.setItem('mhJournalEntry', state.journalEntry);
+            });
+            elements.downloadBtn.addEventListener('click', handleDownloadReport);
+            elements.restartBtn.addEventListener('click', handleStartOver);
+        }
+
+        // Render current question
+        function renderQuestion() {
+            const currentQuestion = state.questions[state.currentStep];
+            
+            elements.progressBar.style.width = `${(state.currentStep / state.questions.length) * 100}%`;
+            elements.progressText.textContent = `Question ${state.currentStep + 1} of ${state.questions.length}`;
+            
+            elements.questionText.textContent = currentQuestion.question;
+            
+            elements.optionsContainer.innerHTML = '';
+            currentQuestion.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = `option ${state.responses[currentQuestion.id] === index ? 'selected' : ''}`;
+                optionElement.textContent = option.text;
+                optionElement.addEventListener('click', () => handleOptionSelect(currentQuestion.id, index));
+                elements.optionsContainer.appendChild(optionElement);
+            });
+            
+            elements.prevBtn.disabled = state.currentStep === 0;
+            
+            const hasResponse = state.responses[currentQuestion.id] !== undefined;
+            elements.nextBtn.disabled = !hasResponse;
+            
+            if (state.currentStep === state.questions.length - 1) {
+                elements.nextBtn.innerHTML = 'Submit <i class="icon" data-feather="send"></i>';
+                feather.replace();
+            } else {
+                elements.nextBtn.innerHTML = 'Next <i class="icon" data-feather="arrow-right"></i>';
+                feather.replace();
+            }
+        }
+
+        // Handle option selection
+        function handleOptionSelect(questionId, optionIndex) {
+            state.responses[questionId] = optionIndex;
+            renderQuestion();
+            
+            localStorage.setItem('mhAssessmentProgress', JSON.stringify({
+                step: state.currentStep,
+                answers: state.responses
+            }));
+        }
+
+        // Handle previous button
+        function handlePrevious() {
+            if (state.currentStep > 0) {
+                state.currentStep--;
+                renderQuestion();
+            }
+        }
+
+        // Handle next/submit button
+        function handleNext() {
+            if (state.currentStep < state.questions.length - 1) {
+                state.currentStep++;
+                renderQuestion();
+            } else {
+                calculateScores();
+            }
+        }
+
+        // Calculate depression and anxiety scores
+        function calculateScores() {
+            let depressionScore = 0;
+            let anxietyScore = 0;
+            
+            Object.entries(state.responses).forEach(([questionId, optionIndex]) => {
+                const question = state.questions.find(q => q.id.toString() === questionId);
+                if (question) {
+                    depressionScore += question.options[optionIndex].depressionWeight;
+                    anxietyScore += question.options[optionIndex].anxietyWeight;
+                }
+            });
+            
+            state.results = {
+                depression: depressionScore,
+                anxiety: anxietyScore
+            };
+            
+            state.assessmentComplete = true;
+            showResults();
+        }
+
+        // Show results page
+        function showResults() {
+            elements.assessmentContainer.classList.add('hidden');
+            elements.resultsContainer.classList.remove('hidden');
+            
+            elements.depressionScore.textContent = `${state.results.depression}/30`;
+            elements.anxietyScore.textContent = `${state.results.anxiety}/30`;
+            
+            elements.depressionBar.style.width = `${(state.results.depression / 30) * 100}%`;
+            elements.anxietyBar.style.width = `${(state.results.anxiety / 30) * 100}%`;
+            
+            renderChart();
+            
+            renderRecommendations();
+        }
+
+        // Render chart using SVG
+        function renderChart() {
+            const chartContainer = document.getElementById('chart-container');
+            chartContainer.innerHTML = '';
+            
+            const svgWidth = chartContainer.clientWidth;
+            const svgHeight = 250;
+            const maxScore = 30;
+            
+            const padding = {
+                top: 30,
+                right: 30,
+                bottom: 50,
+                left: 50
+            };
+            const chartWidth = svgWidth - padding.left - padding.right;
+            const chartHeight = svgHeight - padding.top - padding.bottom;
+            const barWidth = Math.min(80, chartWidth * 0.25);
+            const barGap = Math.min(60, chartWidth * 0.15);
+            const centerOffset = (chartWidth - (barWidth * 2 + barGap)) / 2;
+            
+            const colors = {
+                depression: { main: '#6366f1', light: 'rgba(99, 102, 241, 0.2)' },
+                anxiety: { main: '#10b981', light: 'rgba(16, 185, 129, 0.2)' },
+                text: '#e5e7eb',
+                grid: '#374151',
+                axisLine: '#4b5563',
+                background: 'rgba(31, 41, 55, 0.4)'
+            };
+            
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', '100%');
+            svg.setAttribute('height', svgHeight);
+            svg.setAttribute('viewBox', `0 0 ${svgWidth} ${svgHeight}`);
+            svg.style.overflow = 'visible';
+            
+            const chartBackground = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            chartBackground.setAttribute('x', padding.left);
+            chartBackground.setAttribute('y', padding.top);
+            chartBackground.setAttribute('width', chartWidth);
+            chartBackground.setAttribute('height', chartHeight);
+            chartBackground.setAttribute('fill', colors.background);
+            chartBackground.setAttribute('rx', '4');
+            svg.appendChild(chartBackground);
+            
+            for (let i = 0; i <= maxScore; i += 5) {
+                const yPos = padding.top + chartHeight - ((i / maxScore) * chartHeight);
+                
+                if (i > 0) {
+                    const gridLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    gridLine.setAttribute('x1', padding.left);
+                    gridLine.setAttribute('y1', yPos);
+                    gridLine.setAttribute('x2', padding.left + chartWidth);
+                    gridLine.setAttribute('y2', yPos);
+                    gridLine.setAttribute('stroke', colors.grid);
+                    gridLine.setAttribute('stroke-width', '1');
+                    gridLine.setAttribute('stroke-dasharray', '3,3');
+                    svg.appendChild(gridLine);
+                }
+                
+                const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                label.setAttribute('x', padding.left - 10);
+                label.setAttribute('y', yPos);
+                label.setAttribute('text-anchor', 'end');
+                label.setAttribute('dominant-baseline', 'middle');
+                label.setAttribute('fill', colors.text);
+                label.setAttribute('font-size', '12px');
+                label.textContent = i;
+                svg.appendChild(label);
+            }
+            
+            const yAxisTitle = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            yAxisTitle.setAttribute('x', 15);
+            yAxisTitle.setAttribute('y', padding.top + chartHeight / 2);
+            yAxisTitle.setAttribute('text-anchor', 'middle');
+            yAxisTitle.setAttribute('transform', `rotate(-90, 15, ${padding.top + chartHeight / 2})`);
+            yAxisTitle.setAttribute('fill', colors.text);
+            yAxisTitle.setAttribute('font-size', '12px');
+            yAxisTitle.setAttribute('font-weight', 'bold');
+            yAxisTitle.textContent = 'Score';
+            svg.appendChild(yAxisTitle);
+            
+            const xAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            xAxis.setAttribute('x1', padding.left);
+            xAxis.setAttribute('y1', padding.top + chartHeight);
+            xAxis.setAttribute('x2', padding.left + chartWidth);
+            xAxis.setAttribute('y2', padding.top + chartHeight);
+            xAxis.setAttribute('stroke', colors.axisLine);
+            xAxis.setAttribute('stroke-width', '2');
+            svg.appendChild(xAxis);
+            
+            const yAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            yAxis.setAttribute('x1', padding.left);
+            yAxis.setAttribute('y1', padding.top);
+            yAxis.setAttribute('x2', padding.left);
+            yAxis.setAttribute('y2', padding.top + chartHeight);
+            yAxis.setAttribute('stroke', colors.axisLine);
+            yAxis.setAttribute('stroke-width', '2');
+            svg.appendChild(yAxis);
+            
+            const bar1X = padding.left + centerOffset;
+            const bar2X = padding.left + centerOffset + barWidth + barGap;
+            
+            const depressionHeight = (state.results.depression / maxScore) * chartHeight;
+            const depressionBar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            depressionBar.setAttribute('x', bar1X);
+            depressionBar.setAttribute('y', padding.top + chartHeight);
+            depressionBar.setAttribute('width', barWidth);
+            depressionBar.setAttribute('height', 0);
+            depressionBar.setAttribute('fill', colors.depression.main);
+            depressionBar.setAttribute('rx', '4');
+            depressionBar.setAttribute('filter', 'url(#shadow)');
+            svg.appendChild(depressionBar);
+            
+            setTimeout(() => {
+                depressionBar.setAttribute('y', padding.top + chartHeight - depressionHeight);
+                depressionBar.setAttribute('height', depressionHeight);
+                depressionBar.style.transition = 'y 0.8s ease-out, height 0.8s ease-out';
+            }, 100);
+            
+            const anxietyHeight = (state.results.anxiety / maxScore) * chartHeight;
+            const anxietyBar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            anxietyBar.setAttribute('x', bar2X);
+            anxietyBar.setAttribute('y', padding.top + chartHeight);
+            anxietyBar.setAttribute('width', barWidth);
+            anxietyBar.setAttribute('height', 0);
+            anxietyBar.setAttribute('fill', colors.anxiety.main);
+            anxietyBar.setAttribute('rx', '4');
+            anxietyBar.setAttribute('filter', 'url(#shadow)');
+            svg.appendChild(anxietyBar);
+            
+            setTimeout(() => {
+                anxietyBar.setAttribute('y', padding.top + chartHeight - anxietyHeight);
+                anxietyBar.setAttribute('height', anxietyHeight);
+                anxietyBar.style.transition = 'y 0.8s ease-out, height 0.8s ease-out';
+            }, 300);
+            
+            const depressionLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            depressionLabel.setAttribute('x', bar1X + barWidth/2);
+            depressionLabel.setAttribute('y', padding.top + chartHeight + 25);
+            depressionLabel.setAttribute('text-anchor', 'middle');
+            depressionLabel.setAttribute('fill', colors.depression.main);
+            depressionLabel.setAttribute('font-size', '14px');
+            depressionLabel.setAttribute('font-weight', 'bold');
+            depressionLabel.textContent = 'Depression';
+            svg.appendChild(depressionLabel);
+            
+            const anxietyLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            anxietyLabel.setAttribute('x', bar2X + barWidth/2);
+            anxietyLabel.setAttribute('y', padding.top + chartHeight + 25);
+            anxietyLabel.setAttribute('text-anchor', 'middle');
+            anxietyLabel.setAttribute('fill', colors.anxiety.main);
+            anxietyLabel.setAttribute('font-size', '14px');
+            anxietyLabel.setAttribute('font-weight', 'bold');
+            anxietyLabel.textContent = 'Anxiety';
+            svg.appendChild(anxietyLabel);
+            
+            const depressionValue = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            depressionValue.setAttribute('x', bar1X + barWidth/2);
+            depressionValue.setAttribute('y', padding.top + chartHeight - depressionHeight - 10);
+            depressionValue.setAttribute('text-anchor', 'middle');
+            depressionValue.setAttribute('fill', '#ffffff');
+            depressionValue.setAttribute('font-size', '14px');
+            depressionValue.setAttribute('font-weight', 'bold');
+            depressionValue.setAttribute('opacity', '0');
+            depressionValue.textContent = state.results.depression;
+            svg.appendChild(depressionValue);
+            
+            setTimeout(() => {
+                depressionValue.setAttribute('opacity', '1');
+                depressionValue.style.transition = 'opacity 0.5s ease-in';
+            }, 800);
+            
+            const anxietyValue = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            anxietyValue.setAttribute('x', bar2X + barWidth/2);
+            anxietyValue.setAttribute('y', padding.top + chartHeight - anxietyHeight - 10);
+            anxietyValue.setAttribute('text-anchor', 'middle');
+            anxietyValue.setAttribute('fill', '#ffffff');
+            anxietyValue.setAttribute('font-size', '14px');
+            anxietyValue.setAttribute('font-weight', 'bold');
+            anxietyValue.setAttribute('opacity', '0');
+            anxietyValue.textContent = state.results.anxiety;
+            svg.appendChild(anxietyValue);
+            
+            setTimeout(() => {
+                anxietyValue.setAttribute('opacity', '1');
+                anxietyValue.style.transition = 'opacity 0.5s ease-in';
+            }, 1000);
+            
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+            filter.setAttribute('id', 'shadow');
+            filter.setAttribute('x', '-20%');
+            filter.setAttribute('y', '-20%');
+            filter.setAttribute('width', '140%');
+            filter.setAttribute('height', '140%');
+            
+            const feDropShadow = document.createElementNS('http://www.w3.org/2000/svg', 'feDropShadow');
+            feDropShadow.setAttribute('dx', '0');
+            feDropShadow.setAttribute('dy', '4');
+            feDropShadow.setAttribute('stdDeviation', '4');
+            feDropShadow.setAttribute('flood-color', 'rgba(0, 0, 0, 0.3)');
+            
+            filter.appendChild(feDropShadow);
+            defs.appendChild(filter);
+            svg.appendChild(defs);
+            
+            const moderateLineY = padding.top + chartHeight - ((10 / maxScore) * chartHeight);
+            const moderateLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            moderateLine.setAttribute('x1', padding.left);
+            moderateLine.setAttribute('y1', moderateLineY);
+            moderateLine.setAttribute('x2', padding.left + chartWidth);
+            moderateLine.setAttribute('y2', moderateLineY);
+            moderateLine.setAttribute('stroke', '#f59e0b');
+            moderateLine.setAttribute('stroke-width', '2');
+            moderateLine.setAttribute('stroke-dasharray', '6,3');
+            svg.appendChild(moderateLine);
+            
+            const thresholdLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            thresholdLabel.setAttribute('x', padding.left + chartWidth - 5);
+            thresholdLabel.setAttribute('y', moderateLineY - 5);
+            thresholdLabel.setAttribute('text-anchor', 'end');
+            thresholdLabel.setAttribute('fill', '#f59e0b');
+            thresholdLabel.setAttribute('font-size', '11px');
+            thresholdLabel.textContent = 'Moderate concern';
+            svg.appendChild(thresholdLabel);
+            
+            chartContainer.appendChild(svg);
+        }
+
+        // Render personalized recommendations
+        function renderRecommendations() {
+            const recommendations = getRecommendations();
+            elements.recommendationsContainer.innerHTML = '';
+            
+            recommendations.forEach(rec => {
+                const recElement = document.createElement('div');
+                recElement.className = 'recommendation';
+                
+                const titleElement = document.createElement('h3');
+                titleElement.className = 'text-lg font-medium text-blue-400 mb-2';
+                titleElement.textContent = rec.title;
+                
+                const tipsList = document.createElement('ul');
+                tipsList.className = 'tips-list';
+                
+                rec.tips.forEach(tip => {
+                    const tipItem = document.createElement('li');
+                    tipItem.className = 'text-gray-300';
+                    tipItem.textContent = tip;
+                    tipsList.appendChild(tipItem);
+                });
+                
+                recElement.appendChild(titleElement);
+                recElement.appendChild(tipsList);
+                elements.recommendationsContainer.appendChild(recElement);
+            });
+        }
+
+        // Get recommendations based on scores
+        function getRecommendations() {
+            const recommendations = [];
+            
+            if (state.results.depression >= 0 && state.results.depression <= 5) {
+                recommendations.push({
+                    title: "Depression: Mild or Minimal Symptoms",
+                    tips: [
+                        "Maintain regular physical activity",
+                        "Practice mindfulness for 10 minutes daily",
+                        "Keep a gratitude journal"
+                    ]
+                });
+            } else if (state.results.depression > 5 && state.results.depression <= 10) {
+                recommendations.push({
+                    title: "Depression: Moderate Symptoms",
+                    tips: [
+                        "Consider speaking with a mental health professional",
+                        "Establish consistent sleep patterns",
+                        "Engage in activities that previously brought joy",
+                        "Connect with supportive friends or family"
+                    ]
+                });
+            } else {
+                recommendations.push({
+                    title: "Depression: Significant Symptoms",
+                    tips: [
+                        "Consult with a healthcare provider about your symptoms",
+                        "Join a support group",
+                        "Limit alcohol and caffeine consumption",
+                        "Create daily structure with small, achievable goals"
+                    ]
+                });
+            }
+            
+            if (state.results.anxiety >= 0 && state.results.anxiety <= 5) {
+                recommendations.push({
+                    title: "Anxiety: Mild or Minimal Symptoms",
+                    tips: [
+                        "Practice deep breathing exercises",
+                        "Limit exposure to negative news",
+                        "Maintain regular physical activity"
+                    ]
+                });
+            } else if (state.results.anxiety > 5 && state.results.anxiety <= 10) {
+                recommendations.push({
+                    title: "Anxiety: Moderate Symptoms",
+                    tips: [
+                        "Try progressive muscle relaxation techniques",
+                        "Consider speaking with a mental health professional",
+                        "Keep a worry journal to identify patterns",
+                        "Establish healthy boundaries in stressful situations"
+                    ]
+                });
+            } else {
+                recommendations.push({
+                    title: "Anxiety: Significant Symptoms",
+                    tips: [
+                        "Consult with a healthcare provider about your symptoms",
+                        "Try cognitive behavioral techniques",
+                        "Practice daily meditation",
+                        "Consider limiting stimulants like caffeine"
+                    ]
+                });
+            }
+            
+            return recommendations;
+        }
+
+        // Load jsPDF and handle PDF download
+        let jsPDFLoaded = false;
+
+        function loadJsPDF() {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                script.onload = () => {
+                    jsPDFLoaded = true;
+                    resolve();
+                };
+                script.onerror = () => reject(new Error('Failed to load jsPDF'));
+                document.head.appendChild(script);
+            });
+        }
+
+        // Handle download report
+        async function handleDownloadReport() {
+            try {
+                if (!jsPDFLoaded) {
+                    elements.downloadBtn.disabled = true;
+                    elements.downloadBtn.textContent = 'Loading PDF library...';
+                    await loadJsPDF();
+                }
+
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                doc.addFont('helvetica', 'Helvetica', 'normal');
+                doc.setFont('Helvetica');
+                
+                doc.setFontSize(24);
+                doc.setTextColor(37, 99, 235);
+                doc.text('Mental Health Assessment Report', 105, 20, { align: 'center' });
+                
+                doc.setFontSize(14);
+                doc.setTextColor(102, 102, 102);
+                doc.text('Your personalized mental health assessment results', 105, 28, { align: 'center' });
+                
+                const today = new Date();
+                const dateStr = today.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+                doc.setFontSize(12);
+                doc.setTextColor(102, 102, 102);
+                doc.text(`Generated on: ${dateStr}`, 190, 35, { align: 'right' });
+                
+                doc.setDrawColor(37, 99, 235);
+                doc.setLineWidth(0.5);
+                doc.line(20, 40, 190, 40);
+                
+                doc.setFontSize(18);
+                doc.setTextColor(37, 99, 235);
+                doc.text('Assessment Scores', 20, 50);
+                
+                const depressionWidth = (state.results.depression / 30) * 100;
+                const anxietyWidth = (state.results.anxiety / 30) * 100;
+                
+                doc.setFontSize(14);
+                doc.setTextColor(0, 0, 0);
+                doc.text('Depression Score:', 30, 65);
+                
+                doc.setFontSize(24);
+                doc.text(`${state.results.depression}/30`, 30, 75);
+                
+                doc.setFillColor(224, 224, 224);
+                doc.rect(30, 80, 70, 8, 'F');
+                doc.setFillColor(99, 102, 241);
+                doc.rect(30, 80, depressionWidth * 0.7, 8, 'F');
+                
+                doc.setFontSize(14);
+                doc.text('Anxiety Score:', 120, 65);
+                
+                doc.setFontSize(24);
+                doc.text(`${state.results.anxiety}/30`, 120, 75);
+                
+                doc.setFillColor(224, 224, 224);
+                doc.rect(120, 80, 70, 8, 'F');
+                doc.setFillColor(16, 185, 129);
+                doc.rect(120, 80, anxietyWidth * 0.7, 8, 'F');
+                
+                doc.setFontSize(18);
+                doc.setTextColor(37, 99, 235);
+                doc.text('Personalized Recommendations', 20, 100);
+                
+                const recommendations = getRecommendations();
+                let yPosition = 110;
+                
+                recommendations.forEach(rec => {
+                    doc.setFontSize(14);
+                    doc.setTextColor(0, 0, 0);
+                    doc.setFont('Helvetica', 'bold');
+                    doc.text(rec.title, 20, yPosition);
+                    doc.setFont('Helvetica', 'normal');
+                    
+                    yPosition += 7;
+                    
+                    rec.tips.forEach((tip, index) => {
+                        if (yPosition > 270) {
+                            doc.addPage();
+                            yPosition = 20;
+                        }
+                        doc.text(`• ${tip}`, 25, yPosition);
+                        yPosition += 7;
+                    });
+                    
+                    yPosition += 5;
+                });
+                
+                if (yPosition > 250) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+                
+                doc.setFontSize(14);
+                doc.setTextColor(37, 99, 235);
+                doc.text('Important Disclaimer', 20, yPosition);
+                
+                yPosition += 7;
+                
+                doc.setFontSize(10);
+                doc.setTextColor(102, 102, 102);
+                const disclaimerText = "This assessment is not a diagnostic tool. It is designed to provide general information about your mental health and well-being. The results should not be considered as a substitute for professional medical advice, diagnosis, or treatment. If you are experiencing significant distress or have concerns about your mental health, please consult with a qualified healthcare provider or mental health professional.";
+                
+                const splitText = doc.splitTextToSize(disclaimerText, 170);
+                doc.text(splitText, 20, yPosition);
+                
+                doc.setFontSize(10);
+                doc.setTextColor(102, 102, 102);
+                doc.text('© Mental Health Assessment Tool - For personal use only', 105, 285, { align: 'center' });
+                
+                doc.save('Mental_Health_Assessment_Report.pdf');
+                
+                elements.downloadBtn.disabled = false;
+                elements.downloadBtn.innerHTML = '<i class="icon" data-feather="download"></i> Download Report (PDF)';
+                feather.replace();
+                
+                alert("Your report has been downloaded successfully!");
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                alert("An error occurred while generating the PDF. Please try again.");
+                elements.downloadBtn.disabled = false;
+                elements.downloadBtn.innerHTML = '<i class="icon" data-feather="download"></i> Download Report (PDF)';
+                feather.replace();
+            }
+        }
+
+        // Handle start over
+        function handleStartOver() {
+            resetStateAndGenerateAssessment();
+            state.journalEntry = "";
+            elements.journalEntry.value = "";
+            localStorage.removeItem('mhJournalEntry');
+            
+            elements.quoteText.textContent = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+            
+            elements.resultsContainer.classList.add('hidden');
+            elements.assessmentContainer.classList.remove('hidden');
+            
+            renderQuestion();
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+</body>
+</html>
