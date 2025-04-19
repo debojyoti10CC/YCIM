@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mindscape | Premium VR Mental Wellness Experiences</title>
+  <meta name="description" content="Clinical-grade VR therapy combining neuroscience, ancient wisdom, and immersive technology for transformative mental health outcomes">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary: #3A57E8;
+      --primary-light: #5D76F7;
+      --primary-dark: #2A46D1;
+      --secondary: #00BFA5;
+      --secondary-light: #1ADEC2;
+      --accent: #FF5757;
+      --accent-light: #FF7E7E;
+      --bg-light: #F8FAFF;
+      --bg-white: #FFFFFF;
+      --bg-dark: #0A1128;
+      --bg-darker: #050A18;
+      --text-primary: #E9EFFF;
+      --text-secondary: #B4C0E0;
+      --text-light: #758AAB;
+      --text-white: #FFFFFF;
+      --success: #38B77F;
+      --warning: #E8B13A;
+      --danger: #E85353;
+      --border: rgba(255, 255, 255, 0.08);
+      --shadow: rgba(0, 0, 0, 0.3);
+      --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      --gradient-secondary: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+      --gradient-dark: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+      --border-radius: 12px;
+      --border-radius-lg: 16px;
+      --transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+      --section-spacing: 120px;
+      --shadow-card: 0 12px 24px rgba(0, 0, 0, 0.2);
+      --shadow-button: 0 6px 12px rgba(58, 87, 232, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(5, 10, 24, 0.85);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      transition: var(--transition);
+    }
+
+    header.scrolled {
+      padding: 0.75rem 0;
+      background: rgba(5, 10, 24, 0.95);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.75rem;
+      color: var(--text-white);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-left: 0.5rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+      font-weight: 500;
+      font-size: 1rem;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-white);
+    }
+
+    .nav-links a.active {
+      color: var(--primary-light);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.75rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+      outline: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: white;
+      box-shadow: var(--shadow-button);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(58, 87, 232, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(10, 17, 40, 0.5);
+      border: 1px solid var(--border);
+      color: var(--text-white);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(10, 17, 40, 0.7);
+      transform: translateY(-2px);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-white);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      padding: 8rem 0 6rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 80% 50%, rgba(58, 87, 232, 0.15) 0%, transparent 60%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 0.25rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    #hero-animation {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      width: 50%;
+      height: 80%;
+      z-index: 1;
+      opacity: 0.8;
+    }
+
+    /* Features Section */
+    .features {
+      padding: var(--section-spacing) 0;
+      position: relative;
+      background: var(--gradient-dark);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 5rem;
+      position: relative;
+    }
+
+    .section-header::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--gradient-primary);
+      margin: 1.5rem auto 0;
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-size: 2.75rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--text-white) 0%, var(--primary-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: rgba(10, 17, 40, 0.6);
+      border-radius: var(--border-radius-lg);
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+      border-color: rgba(58, 87, 232, 0.3);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top left, rgba(58, 87, 232, 0.1) 0%, transparent 50%);
+      z-index: 0;
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .feature-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-white);
+    }
+
+    .feature-desc {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-link {
+      display: inline-flex;
+      align-items: center;
+      color: var(--primary-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .feature-link i {
+      margin-left: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .feature-link:hover {
+      color: var(--accent);
+    }
+
+    .feature-link:hover i {
+      transform: translateX(3px);
+    }
+
+    /* Therapy Section */
+    .therapy-section {
+      padding: var(--section-spacing) 0;
+      position: relative;
+      background: var(--gradient-dark);
+    }
+
+    .tabs {
+      position: relative;
+    }
+
+    .tab-controls {
+      display: flex;
+      background: rgba(10, 17, 40, 0.5);
+      border-radius: var(--border-radius);
+      padding: 6px;
+      width: fit-content;
+      margin: 0 auto 4rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .tab-btn {
+      padding: 0.875rem 2.25rem;
+      border: none;
+      background: transparent;
+      color: var(--text-light);
+      font-weight: 600;
+      font-size: 0.9375rem;
+      cursor: pointer;
+      border-radius: calc(var(--border-radius) - 6px);
+      transition: var(--transition);
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.2px;
+    }
+
+    .tab-btn.active {
+      color: var(--text-white);
+    }
+
+    .tab-indicator {
+      position: absolute;
+      height: calc(100% - 12px);
+      top: 6px;
+      left: 6px;
+      background: rgba(58, 87, 232, 0.2);
+      backdrop-filter: blur(10px);
+      z-index: 0;
+      border-radius: calc(var(--border-radius) - 6px);
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(58, 87, 232, 0.2);
+      border: 1px solid rgba(58, 87, 232, 0.2);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.6s ease forwards;
+      min-height: 500px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .therapy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 2rem;
+    }
+
+    .therapy-card {
+      background: rgba(10, 17, 40, 0.6);
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      transform-style: preserve-3d;
+      position: relative;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .therapy-card:hover {
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+      transform: translateY(-8px);
+      border-color: rgba(58, 87, 232, 0.3);
+    }
+
+    .therapy-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(58, 87, 232, 0.08) 0%, transparent 100%);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 1;
+    }
+
+    .therapy-card:hover::before {
+      opacity: 1;
+    }
+
+    .therapy-thumbnail {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .therapy-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1s ease;
+    }
+
+    .therapy-card:hover .therapy-thumbnail img {
+      transform: scale(1.08);
+    }
+
+    .therapy-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: var(--gradient-primary);
+      padding: 0.35rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: white;
+      box-shadow: 0 4px 15px rgba(58, 87, 232, 0.3);
+      z-index: 2;
+    }
+
+    .therapy-duration {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: rgba(5, 10, 24, 0.8);
+      padding: 0.35rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      backdrop-filter: blur(5px);
+      z-index: 2;
+      color: var(--text-secondary);
+    }
+
+    .therapy-info {
+      padding: 1.75rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .therapy-title {
+      font-size: 1.375rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-white);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .therapy-desc {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.7;
+    }
+
+    .therapy-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .therapy-rating {
+      display: flex;
+      align-items: center;
+      color: var(--secondary-light);
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    .therapy-rating i {
+      margin-right: 0.35rem;
+      font-size: 0.875rem;
+    }
+
+    .therapy-level {
+      font-size: 0.8125rem;
+      padding: 0.35rem 1rem;
+      border-radius: 2rem;
+      background: rgba(0, 191, 165, 0.1);
+      color: var(--secondary-light);
+      font-weight: 600;
+      border: 1px solid rgba(0, 191, 165, 0.2);
+    }
+
+    .therapy-btn {
+      width: 100%;
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      background: var(--gradient-primary);
+      color: white;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.9375rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-button);
+    }
+
+    .therapy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(58, 87, 232, 0.3);
+    }
+
+    .therapy-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 5px 10px rgba(58, 87, 232, 0.2);
+    }
+
+    .therapy-btn i {
+      font-size: 1rem;
+    }
+
+    /* Testimonials Section */
+    .testimonials {
+      padding: var(--section-spacing) 0;
+      background: linear-gradient(to bottom, var(--bg-darker) 0%, var(--bg-dark) 100%);
+    }
+
+    .testimonials-slider {
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .testimonial-card {
+      background: rgba(10, 17, 40, 0.6);
+      border-radius: var(--border-radius-lg);
+      padding: 3rem;
+      box-shadow: var(--shadow-card);
+      margin: 0 1rem;
+      border: 1px solid var(--border);
+      position: relative;
+      backdrop-filter: blur(10px);
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 1rem;
+      left: 2rem;
+      font-size: 5rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: rgba(58, 87, 232, 0.1);
+      line-height: 1;
+      z-index: 0;
+    }
+
+    .testimonial-content {
+      position: relative;
+      z-index: 1;
+      font-size: 1.125rem;
+      font-style: italic;
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 1rem;
+    }
+
+    .author-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .author-info h4 {
+      font-size: 1.125rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .author-info p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    /* CTA Section */
+    .cta {
+      padding: 8rem 0;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(58, 87, 232, 0.1) 0%, rgba(0, 191, 165, 0.1) 100%);
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+      opacity: 0.1;
+      z-index: 0;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta h2 {
+      font-size: 2.75rem;
+      margin-bottom: 1.5rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cta p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    /* FAQ Section */
+    .faq {
+      padding: var(--section-spacing) 0;
+      background: var(--gradient-dark);
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: rgba(10, 17, 40, 0.6);
+      border-radius: var(--border-radius);
+      margin-bottom: 1rem;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .faq-question {
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+      color: var(--text-white);
+    }
+
+    .faq-question:hover {
+      color: var(--primary-light);
+    }
+
+    .faq-question i {
+      transition: var(--transition);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      padding: 0 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .faq-item.active .faq-question {
+      color: var(--primary-light);
+    }
+
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding-bottom: 1.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-darker);
+      padding: 6rem 0 2rem;
+      position: relative;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-col h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-white);
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      bottom: -0.5rem;
+      left: 0;
+      width: 50%;
+      height: 2px;
+      background: var(--gradient-primary);
+    }
+
+    .footer-logo {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+
+    .footer-logo span {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .footer-about p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+      font-size: 0.9375rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-links a i {
+      margin-right: 0.5rem;
+      font-size: 0.75rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary-light);
+      transform: translateX(5px);
+    }
+
+    .footer-contact p {
+      display: flex;
+      align-items: flex-start;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      font-size: 0.9375rem;
+    }
+
+    .footer-contact i {
+      margin-right: 0.75rem;
+      color: var(--primary-light);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(10, 17, 40, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      color: var(--text-secondary);
+    }
+
+    .social-link:hover {
+      transform: translateY(-3px);
+      background: var(--gradient-primary);
+      color: white;
+      box-shadow: 0 5px 15px rgba(58, 87, 232, 0.4);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .copyright {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .footer-legal {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .footer-legal a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.8125rem;
+      transition: var(--transition);
+    }
+
+    .footer-legal a:hover {
+      color: var(--primary-light);
+    }
+
+    /* Back to Top */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      box-shadow: 0 5px 20px rgba(58, 87, 232, 0.4);
+      z-index: 999;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(58, 87, 232, 0.5);
+    }
+
+    /* Video Modal Styles */
+    .video-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(5, 10, 24, 0.95);
+      backdrop-filter: blur(15px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .video-modal.show {
+      display: block;
+      opacity: 1;
+    }
+
+    .video-modal-content {
+      position: relative;
+      margin: 5% auto;
+      padding: 20px;
+      width: 80%;
+      max-width: 1000px;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .video-modal.show .video-modal-content {
+      transform: scale(1);
+    }
+
+    .video-modal-content video {
+      width: 100%;
+      border-radius: var(--border-radius-lg);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      color: white;
+      font-size: 35px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: var(--transition);
+      opacity: 0.7;
+      z-index: 1001;
+    }
+
+    .close-modal:hover {
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    /* Floating Particles Background */
+    .particles-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(58, 87, 232, 0.1);
+      filter: blur(2px);
+      animation: float 15s infinite linear;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* Loading Animation */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-darker);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loader.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-content {
+      text-align: center;
+    }
+
+    .loader-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(58, 87, 232, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(10, 17, 40, 0.4);
+      border-radius: var(--border-radius-lg);
+      border: 1px solid var(--border);
+      margin: 2rem auto;
+      max-width: 700px;
+    }
+
+    .empty-state-icon {
+      font-size: 3rem;
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .empty-state-title {
+      font-size: 1.5rem;
+      color: var(--text-white);
+      margin-bottom: 1rem;
+    }
+
+    .empty-state-text {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .empty-state-btn {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .empty-state-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-button);
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .section-title {
+        font-size: 2.5rem;
+      }
+
+      .therapy-grid {
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      }
+    }
+
+    @media (max-width: 992px) {
+      :root {
+        --section-spacing: 100px;
+      }
+
+      .section-title {
+        font-size: 2.25rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --section-spacing: 80px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .hero {
+        padding: 6rem 0 4rem;
+        min-height: auto;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-content {
+        max-width: 100%;
+      }
+
+      .hero-cta {
+        justify-content: center;
+      }
+
+      .hero-stats {
+        justify-content: center;
+      }
+
+      #hero-animation {
+        display: none;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .section-subtitle {
+        font-size: 1rem;
+      }
+
+      .tab-controls {
+        width: 100%;
+        overflow-x: auto;
+        padding: 6px;
+        justify-content: flex-start;
+      }
+
+      .tab-btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.875rem;
+        white-space: nowrap;
+      }
+
+      .therapy-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .video-modal-content {
+        width: 95%;
+        margin: 15% auto;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 1.25rem;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+      }
+
+      .section-subtitle {
+        font-size: 0.9375rem;
+      }
+
+      .therapy-thumbnail {
+        height: 180px;
+      }
+
+      .therapy-title {
+        font-size: 1.25rem;
+      }
+
+      .therapy-info {
+        padding: 1.5rem;
+      }
+
+      .therapy-btn {
+        padding: 0.875rem;
+      }
+
+      .close-modal {
+        top: -40px;
+        font-size: 28px;
+      }
+
+      .cta h2 {
+        font-size: 2rem;
+      }
+
+      .cta p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Page Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <div class="loader-text">Loading Mindscape</div>
+    </div>
+  </div>
+
+  <!-- Floating Particles Background -->
+  <div class="particles-container" id="particles-container"></div>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="container header-content">
+      <a href="#" class="logo">Mind<span>scape</span></a>
+      
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#" class="active">Therapies</a></li>
+        <li><a href="#">Research</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      
+      <div class="header-actions">
+        <a href="#" class="btn btn-secondary">Sign In</a>
+        <a href="#" class="btn btn-primary">Get Started</a>
+      </div>
+      
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>Transform Your Mind with Immersive VR Therapy</h1>
+      <p>Experience clinically-validated virtual reality therapies that blend ancient wisdom with cutting-edge neuroscience to reduce stress, enhance mindfulness, and promote emotional balance.</p>
+      
+      <div class="hero-cta">
+        <a href="#" class="btn btn-primary">Start Free Trial</a>
+        <a href="#" class="btn btn-secondary">Watch Demo</a>
+      </div>
+      
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number">15,000+</div>
+          <div class="stat-label">Sessions Completed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">98%</div>
+          <div class="stat-label">Satisfaction Rate</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">4.9</div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+      </div>
+    </div>
+    <div id="hero-animation"></div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Why Mindscape VR Therapy</h2>
+        <p class="section-subtitle">Discover the unique advantages of our immersive platform, designed to deliver measurable mental health outcomes.</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3 class="feature-title">Neuroscience-Driven</h3>
+          <p class="feature-desc">Developed with neuroscientists to optimize brainwave entrainment and neuroplasticity for lasting change.</p>
+          <a href="#" class="feature-link">Learn More <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-vr-cardboard"></i>
+          </div>
+          <h3 class="feature-title">Immersive Environments</h3>
+          <p class="feature-desc">360° VR worlds with spatial audio create deep sensory engagement for enhanced therapeutic impact.</p>
+          <a href="#" class="feature-link">Learn More <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3 class="feature-title">Personalized Insights</h3>
+          <p class="feature-desc">Biofeedback and analytics provide real-time data to tailor your therapy journey.</p>
+          <a href="#" class="feature-link">Learn More <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Therapy Categories -->
+  <section class="therapy-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Transformative VR Therapy Experiences</h2>
+        <p class="section-subtitle">Clinically-designed immersive journeys combining neuroscience, ancient wisdom, and cutting-edge VR technology for measurable mental health outcomes</p>
+      </div>
+      
+      <div class="tabs">
+        <div class="tab-controls">
+          <div class="tab-indicator"></div>
+          <button class="tab-btn active" data-tab="spiritual">Spiritual Wisdom</button>
+          <button class="tab-btn" data-tab="meditation">Mindfulness</button>
+          <button class="tab-btn" data-tab="frequency">Sound Therapy</button>
+          <button class="tab-btn" data-tab="nature">Nature Immersion</button>
+          <button class="tab-btn" data-tab="breathwork">Breathwork</button>
+        </div>
+        
+        <!-- Spiritual Wisdom Tab -->
+        <div class="tab-content active" id="spiritual">
+          <div class="therapy-grid">
+            <div class="therapy-card">
+              <div class="therapy-thumbnail">
+                <img src="/api/placeholder/640/360" alt="Ramayana VR Experience">
+                <span class="therapy-badge">New Release</span>
+                <div class="therapy-duration">50 min</div>
+              </div>
+              <div class="therapy-info">
+                <h3 class="therapy-title">Ramayana: Hero's Journey</h3>
+                <p class="therapy-desc">Embark on an epic VR journey through the Ramayana, experiencing Lord Rama's exile, the battle with Ravana, and the triumphant return to Ayodhya. Reduces anxiety by 37%.</p>
+                <div class="therapy-meta">
+                  <div class="therapy-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.8 (156 reviews)</span>
+                  </div>
+                  <span class="therapy-level">All Levels</span>
+                </div>
+                <button class="therapy-btn" onclick="openVideoModal('ramayana.mp4')">
+                  <i class="fas fa-vr-cardboard"></i> Start Experience
+                </button>
+              </div>
+            </div>
+            
+            <div class="therapy-card">
+              <div class="therapy-thumbnail">
+                <img src="/api/placeholder/640/360" alt="Bhagavad Gita VR Experience">
+                <span class="therapy-badge">Therapist Choice</span>
+                <div class="therapy-duration">45 min</div>
+              </div>
+              <div class="therapy-info">
+                <h3 class="therapy-title">Bhagavad Gita: Wisdom Path</h3>
+                <p class="therapy-desc">Immerse yourself in the timeless teachings of the Bhagavad Gita, guided by Lord Krishna. Enhances decision-making clarity and emotional regulation.</p>
+                <div class="therapy-meta">
+                  <div class="therapy-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.9 (234 reviews)</span>
+                  </div>
+                  <span class="therapy-level">Intermediate</span>
+                </div>
+                <button class="therapy-btn" onclick="openVideoModal('bhagavad-gita.mp4')">
+                  <i class="fas fa-vr-cardboard"></i> Start Experience
+                </button>
+              </div>
+            </div>
+            
+            <div class="therapy-card">
+              <div class="therapy-thumbnail">
+                <img src="/api/placeholder/640/360" alt="Quran VR Experience">
+                <span class="therapy-badge">Clinically Proven</span>
+                <div class="therapy-duration">40 min</div>
+              </div>
+              <div class="therapy-info">
+                <h3 class="therapy-title">Quran: Peaceful Reflections</h3>
+                <p class="therapy-desc">Journey through the serene verses of the Quran in a tranquil VR environment. Reduces stress markers by 42% in clinical trials.</p>
+                <div class="therapy-meta">
+                  <div class="therapy-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.7 (189 reviews)</span>
+                  </div>
+                  <span class="therapy-level">All Levels</span>
+                </div>
+                <button class="therapy-btn" onclick="openVideoModal('quran.mp4')">
+                  <i class="fas fa-vr-cardboard"></i> Start Experience
+                </button>
+              </div>
+            </div>
+            
+            <div class="therapy-card">
+              <div class="therapy-thumbnail">
+                <img src="/api/placeholder/640/360" alt="Bible VR Experience">
+                <span class="therapy-badge">New Release</span>
+                <div class="therapy-duration">50 min</div>
+              </div>
+              <div class="therapy-info">
+                <h3 class="therapy-title">Bible: Sacred Journeys</h3>
+                <p class="therapy-desc">Explore the teachings of the Bible in scientifically-designed VR environments. 35% improvement in life satisfaction scores.</p>
+                <div class="therapy-meta">
+                  <div class="therapy-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.8 (167 reviews)</span>
+                  </div>
+                  <span class="therapy-level">Beginner</span>
+                </div>
+                <button class="therapy-btn" onclick="openVideoModal('bible.mp4')">
+                  <i class="fas fa-vr-cardboard"></i> Start Experience
+                </button>
+              </div>
+            </div>
+            
+            <div class="therapy-card">
+              <div class="therapy-thumbnail">
+                <img src="/api/placeholder/640/360" alt="Mahabharata VR Experience">
+                <span class="therapy-badge">Premium Experience</span>
+                <div class="therapy-duration">60 min</div>
+              </div>
+              <div class="therapy-info">
+                <h3 class="therapy-title">Mahabharata: Dharma Quest</h3>
+                <p class="therapy-desc">Dive into the grand narrative of the Mahabharata through interactive VR storytelling that enhances moral reasoning.</p>
+                <div class="therapy-meta">
+                  <div class="therapy-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.9 (198 reviews)</span>
+                  </div>
+                  <span class="therapy-level">Advanced</span>
+                </div>
+                <button class="therapy-btn" onclick="openVideoModal('mahabharata.mp4')">
+                  <i class="fas fa-vr-cardboard"></i> Start Experience
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mindfulness Tab -->
+        <div class="tab-content" id="meditation">
+          <div class="therapy-grid">
+            <div class="therapy-card">
+              <div class="therapy-thumbnail">
+                <img src="/api/placeholder/640/360" alt="Mindfulness VR Experience">
+                <span class="therapy-badge">Popular</span>
+                <div class="therapy-duration">30 min</div>
+              </div>
+              <div class="therapy-info">
+                <h3 class="therapy-title">Zen Garden Meditation</h3>
+                <p class="therapy-desc">Find peace in a virtual Zen garden with guided mindfulness practices, reducing stress by 40% based on user studies.</p>
+                <div class="therapy-meta">
+                  <div class="therapy-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.8 (210 reviews)</span>
+                  </div>
+                  <span class="therapy-level">Beginner</span>
+                </div>
+                <button class="therapy-btn" onclick="openVideoModal('zen-garden.mp4')">
+                  <i class="fas fa-vr-cardboard"></i> Start Experience
+                </button>
+              </div>
+            </div>
+            
+            <div class="therapy-card">
+              <div class="therapy-thumbnail">
+                <img src="/api/placeholder/640/360" alt="Body Scan VR Experience">
+                <span class="therapy-badge">Therapist Choice</span>
+                <div class="therapy-duration">25 min</div>
+              </div>
+              <div class="therapy-info">
+                <h3 class="therapy-title">Body Scan Relaxation</h3>
+                <p class="therapy-desc">A guided body scan meditation in a soothing VR environment, proven to enhance body awareness and reduce tension.</p>
+                <div class="therapy-meta">
+                  <div class="therapy-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.7 (185 reviews)</span>
+                  </div>
+                  <span class="therapy-level">All Levels</span>
+                </div>
+                <button class="therapy-btn" onclick="openVideoModal('body-scan.mp4')">
+                  <i class="fas fa-vr-cardboard"></i> Start Experience
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sound Therapy Tab -->
+        <div class="tab-content" id="frequency">
+          <div class="therapy-grid">
+            <div class="therapy-card">
+              <div class="therapy-thumbnail">
+                <img src="/api/placeholder/640/360" alt="Binaural Beats VR Experience">
+                <span class="therapy-badge">New Release</span>
+                <div class="therapy-duration">35 min</div>
+              </div>
+              <div class="therapy-info">
+                <h3 class="therapy-title">Binaural Beats Harmony</h3>
+                <p class="therapy-desc">Experience brainwave entrainment through binaural beats in a cosmic VR setting, improving focus by 30%.</p>
+                <div class="therapy-meta">
+                  <div class="therapy-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.6 (145 reviews)</span>
+                  </div>
+                  <span class="therapy-level">Intermediate</span>
+                </div>
+                <button class="therapy-btn" onclick="openVideoModal('binaural-beats.mp4')">
+                  <i class="fas fa-vr-cardboard"></i> Start Experience
+                </button>
+              </div>
+            </div>
+            
+            <div class="therapy-card">
+              <div class="therapy-thumbnail">
+                <img src="/api/placeholder/640/360" alt="Solfeggio VR Experience">
+                <span class="therapy-badge">Clinically Proven</span>
+                <div class="therapy-duration">40 min</div>
+              </div>
+              <div class="therapy-info">
+                <h3 class="therapy-title">Solfeggio Frequencies</h3>
+                <p class="therapy-desc">Align your energy with solfeggio frequencies in a vibrant VR environment, reducing emotional stress by 35%.</p>
+                <div class="therapy-meta">
+                  <div class="therapy-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.8 (172 reviews)</span>
+                  </div>
+                  <span class="therapy-level">All Levels</span>
+                </div>
+                <button class="therapy-btn" onclick="openVideoModal('solfeggio.mp4')">
+                  <i class="fas fa-vr-cardboard"></i> Start Experience
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Nature Immersion Tab -->
+        <div class="tab-content" id="nature">
+          <div class="therapy-grid">
+            <div class="therapy-card">
+              <div class="therapy-thumbnail">
+                <img src="/api/placeholder/640/360" alt="Cloud and Rain VR Experience">
+                <span class="therapy-badge">Stress Relief</span>
+                <div class="therapy-duration">30 min</div>
+              </div>
+              <div class="therapy-info">
+                <h3 class="therapy-title">Clouds & Rain Serenity</h3>
+                <p class="therapy-desc">Lower cortisol levels by 27% with immersive VR featuring drifting clouds and optimized rain sounds.</p>
+                <div class="therapy-meta">
+                  <div class="therapy-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.8 (245 reviews)</span>
+                  </div>
+                  <span class="therapy-level">All Levels</span>
+                </div>
+                <button class="therapy-btn" onclick="openVideoModal('clouds-rain.mp4')">
+                  <i class="fas fa-vr-cardboard"></i> Start Experience
+                </button>
+              </div>
+            </div>
+            
+            <div class="therapy-card">
+              <div class="therapy-thumbnail">
+                <img src="/api/placeholder/640/360" alt="Forest VR Experience">
+                <span class="therapy-badge">Nature Therapy</span>
+                <div class="therapy-duration">45 min</div>
+              </div>
+              <div class="therapy-info">
+                <h3 class="therapy-title">Ancient Forest Walk</h3>
+                <p class="therapy-desc">Based on Shinrin-yoku research, this VR forest bathing experience boosts immune function and reduces blood pressure.</p>
+                <div class="therapy-meta">
+                  <div class="therapy-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.9 (312 reviews)</span>
+                  </div>
+                  <span class="therapy-level">Beginner</span>
+                </div>
+                <button class="therapy-btn" onclick="openVideoModal('forest.mp4')">
+                  <i class="fas fa-vr-cardboard"></i> Start Experience
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Breathwork Tab -->
+        <div class="tab-content" id="breathwork">
+          <div class="therapy-grid">
+            <div class="therapy-card">
+              <div class="therapy-thumbnail">
+                <img src="/api/placeholder/640/360" alt="Box Breathing VR Experience">
+                <span class="therapy-badge">Popular</span>
+                <div class="therapy-duration">20 min</div>
+              </div>
+              <div class="therapy-info">
+                <h3 class="therapy-title">Box Breathing Flow</h3>
+                <p class="therapy-desc">Master box breathing in a calming VR ocean setting, reducing heart rate variability by 25%.</p>
+                <div class="therapy-meta">
+                  <div class="therapy-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.7 (198 reviews)</span>
+                  </div>
+                  <span class="therapy-level">Beginner</span>
+                </div>
+                <button class="therapy-btn" onclick="openVideoModal('box-breathing.mp4')">
+                  <i class="fas fa-vr-cardboard"></i> Start Experience
+                </button>
+              </div>
+            </div>
+            
+            <div class="therapy-card">
+              <div class="therapy-thumbnail">
+                <img src="/api/placeholder/640/360" alt="Pranayama VR Experience">
+                <span class="therapy-badge">Premium Experience</span>
+                <div class="therapy-duration">30 min</div>
+              </div>
+              <div class="therapy-info">
+                <h3 class="therapy-title">Pranayama Vitality</h3>
+                <p class="therapy-desc">Practice ancient pranayama techniques in a Himalayan VR setting, enhancing energy and focus.</p>
+                <div class="therapy-meta">
+                  <div class="therapy-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.9 (165 reviews)</span>
+                  </div>
+                  <span class="therapy-level">Intermediate</span>
+                </div>
+                <button class="therapy-btn" onclick="openVideoModal('pranayama.mp4')">
+                  <i class="fas fa-vr-cardboard"></i> Start Experience
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Voices of Transformation</h2>
+        <p class="section-subtitle">Real stories from users who found healing through Mindscape</p>
+      </div>
+      
+      <div class="testimonials-slider">
+        <div class="testimonial-card">
+          <p class="testimonial-content">"The Ramayana VR experience was a game-changer for my anxiety. Visualizing Rama's journey helped me find inner strength."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              <img src="/api/placeholder/50/50" alt="Amit S.">
+            </div>
+            <div class="author-info">
+              <h4>Amit S.</h4>
+              <p>Anxiety Management, 38 sessions</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <p class="testimonial-content">"Mindscape's forest walk feels like a real escape. My blood pressure has improved, and I feel calmer every day."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              <img src="/api/placeholder/50/50" alt="Sarah L.">
+            </div>
+            <div class="author-info">
+              <h4>Sarah L.</h4>
+              <p>Stress Relief, 25 sessions</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <p class="testimonial-content">"The Quran experience brought me peace like never before. It's both spiritual and therapeutic."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              <img src="/api/placeholder/50/50" alt="Fatima A.">
+            </div>
+            <div class="author-info">
+              <h4>Fatima A.</h4>
+              <p>Emotional Wellness, 45 sessions</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Begin Your Healing Journey Today</h2>
+        <p>Join thousands who have transformed their mental wellness with Mindscape's immersive VR therapy. No headset required for mobile experiences.</p>
+        
+        <div class="cta-buttons">
+          <a href="#" class="btn btn-primary">Start 7-Day Free Trial</a>
+          <a href="#" class="btn btn-secondary">Contact a Guide</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about Mindscape VR therapy</p>
+      </div>
+      
+      <div class="faq-container">
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Do I need a VR headset to use Mindscape?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>While a VR headset offers the most immersive experience, many therapies are available in cinematic mode on smartphones, tablets, or computers, delivering significant benefits.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How does VR therapy differ from traditional therapy?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>VR therapy engages all senses in immersive environments, creating stronger neural pathways and enabling safe exposure therapy with real-time biofeedback.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Is Mindscape safe for children?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Programs for teens (13+) are available with parental guidance. For children under 13, consult a pediatric mental health professional before use.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>What research supports Mindscape's VR therapy?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Over 300 studies show VR reduces anxiety by 40-70%, PTSD by 50-66%, and improves mindfulness by 30-50% compared to traditional methods.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <div class="footer-logo">Mind<span>scape</span></div>
+          <div class="footer-about">
+            <p>Revolutionizing mental wellness with VR technology and ancient wisdom since 2020.</p>
+          </div>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Therapies</h3>
+          <ul class="footer-links">
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Spiritual Wisdom</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Mindfulness</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Sound Therapy</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Nature Immersion</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Breathwork</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Company</h3>
+          <ul class="footer-links">
+            <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Research</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Careers</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Press</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Contact</h3>
+          <div class="footer-contact">
+            <p><i class="fas fa-map-marker-alt"></i> 123 Wellness Way, San Francisco, CA 94107</p>
+            <p><i class="fas fa-phone-alt"></i> +1 (800) 555-HEAL</p>
+            <p><i class="fas fa-envelope"></i> support@mindscapevr.com</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="copyright">© 2025 Mindscape VR. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">HIPAA Compliance</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <div class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <!-- Video Modal -->
+  <div id="video-modal" class="video-modal">
+    <div class="video-modal-content">
+      <span class="close-modal">×</span>
+      <video id="modal-video" controls>
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <script>
+    // Page Loader
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      setTimeout(() => {
+        loader.classList.add('hide');
+      }, 500);
+    });
+
+    // Header Scroll Effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Floating Particles
+    const particlesContainer = document.getElementById('particles-container');
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      const size = Math.random() * 10 + 5;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+      particlesContainer.appendChild(particle);
+      setTimeout(() => particle.remove(), 15000);
+    }
+    setInterval(createParticle, 500);
+
+    // Tab Functionality
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const tabIndicator = document.querySelector('.tab-indicator');
+
+    function setActiveTab(btn) {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const tabId = btn.getAttribute('data-tab');
+      tabContents.forEach(content => {
+        content.classList.remove('active');
+        if (content.id === tabId) {
+          content.classList.add('active');
+        }
+      });
+      
+      const btnRect = btn.getBoundingClientRect();
+      const containerRect = btn.parentElement.getBoundingClientRect();
+      tabIndicator.style.width = `${btnRect.width}px`;
+      tabIndicator.style.left = `${btnRect.left - containerRect.left}px`;
+    }
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => setActiveTab(btn));
+    });
+
+    if (tabBtns.length > 0) {
+      setActiveTab(tabBtns[0]);
+    }
+
+    // Video Modal Functionality
+    const videoModal = document.getElementById('video-modal');
+    const modalVideo = document.getElementById('modal-video');
+    const closeModal = document.querySelector('.close-modal');
+
+    function openVideoModal(videoSrc) {
+      videoModal.classList.add('show');
+      modalVideo.src = videoSrc;
+      modalVideo.play();
+      document.body.style.overflow = 'hidden';
+    }
+
+    closeModal.addEventListener('click', () => {
+      videoModal.classList.remove('show');
+      modalVideo.pause();
+      modalVideo.currentTime = 0;
+      document.body.style.overflow = 'auto';
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === videoModal) {
+        videoModal.classList.remove('show');
+        modalVideo.pause();
+        modalVideo.currentTime = 0;
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      question.addEventListener('click', () => {
+        item.classList.toggle('active');
+      });
+    });
+
+    // Back to Top Button
+    const backToTopBtn = document.querySelector('.back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Hero Animation (Mock)
+    document.addEventListener('DOMContentLoaded', () => {
+      const heroAnimContainer = document.getElementById('hero-animation');
+      if (heroAnimContainer) {
+        heroAnimContainer.innerHTML = '<div style="width:100%;height:100%;background:rgba(58,87,232,0.1);border-radius:1rem;"></div>';
+      }
+    });
+  </script>
+</body>
+</html>
