@@ -1344,18 +1344,19 @@
   <!-- Header -->
   <header id="header">
     <div class="container header-content">
-      <a href="#" class="logo">Mind<span>scape</span></a>
+      <a href="#" class="logo">Mind<span>pal</span></a>
       
       <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#" class="active">Therapies</a></li>
-        <li><a href="#">Research</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="vr3.html" class="active">Therapies</a></li>
+        <li><a href="MHA.html">MHA</a></li>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="profile.html">Profile</a></li>
       </ul>
       
       <div class="header-actions">
         <a href="#" class="btn btn-secondary">Sign In</a>
+
         <a href="#" class="btn btn-primary">Get Started</a>
       </div>
       
@@ -1372,24 +1373,12 @@
       <p>Experience clinically-validated virtual reality therapies that blend ancient wisdom with cutting-edge neuroscience to reduce stress, enhance mindfulness, and promote emotional balance.</p>
       
       <div class="hero-cta">
-        <a href="#" class="btn btn-primary">Start Free Trial</a>
-        <a href="#" class="btn btn-secondary">Watch Demo</a>
+        
+        
+        <button class="therapy-btn" onclick="openVideoModal('ramayana.mp4')">Watch Demo</button>
       </div>
       
-      <div class="hero-stats">
-        <div class="stat-item">
-          <div class="stat-number">15,000+</div>
-          <div class="stat-label">Sessions Completed</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">98%</div>
-          <div class="stat-label">Satisfaction Rate</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">4.9</div>
-          <div class="stat-label">Average Rating</div>
-        </div>
-      </div>
+      
     </div>
     <div id="hero-animation"></div>
   </section>
@@ -1407,8 +1396,8 @@
           <div class="feature-icon">
             <i class="fas fa-brain"></i>
           </div>
-          <h3 class="feature-title">Neuroscience-Driven</h3>
-          <p class="feature-desc">Developed with neuroscientists to optimize brainwave entrainment and neuroplasticity for lasting change.</p>
+          <h3 class="feature-title">Massage Therapy</h3>
+          <p class="feature-desc">Combines intelligent eye and head massage with VR immersion to relieve tension, improve circulation, and enhance relaxation—supporting both mental clarity and neuromuscular well-being.</p>
           <a href="#" class="feature-link">Learn More <i class="fas fa-arrow-right"></i></a>
         </div>
         
@@ -1416,7 +1405,7 @@
           <div class="feature-icon">
             <i class="fas fa-vr-cardboard"></i>
           </div>
-          <h3 class="feature-title">Immersive Environments</h3>
+          <h3 class="feature-title">Immersive VR & Auditory Environments</h3>
           <p class="feature-desc">360° VR worlds with spatial audio create deep sensory engagement for enhanced therapeutic impact.</p>
           <a href="#" class="feature-link">Learn More <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -1425,8 +1414,8 @@
           <div class="feature-icon">
             <i class="fas fa-chart-line"></i>
           </div>
-          <h3 class="feature-title">Personalized Insights</h3>
-          <p class="feature-desc">Biofeedback and analytics provide real-time data to tailor your therapy journey.</p>
+          <h3 class="feature-title">Real-Time Mental Health Monitoring</h3>
+          <p class="feature-desc">Track stress, mood, and biofeedback data in real-time. Mindpal adapts therapy dynamically to offer personalized experiences using smart analytics and wellness insights.</p>
           <a href="#" class="feature-link">Learn More <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
@@ -1467,7 +1456,7 @@
                   <div class="therapy-rating">
                     <i class="fas fa-star"></i>
                     <span>4.8 (156 reviews)</span>
-                  </div>
+                    </div>
                   <span class="therapy-level">All Levels</span>
                 </div>
                 <button class="therapy-btn" onclick="openVideoModal('ramayana.mp4')">
@@ -1765,63 +1754,14 @@
     </div>
   </section>
 
-  <!-- Testimonials Section -->
-  <section class="testimonials">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Voices of Transformation</h2>
-        <p class="section-subtitle">Real stories from users who found healing through Mindscape</p>
-      </div>
-      
-      <div class="testimonials-slider">
-        <div class="testimonial-card">
-          <p class="testimonial-content">"The Ramayana VR experience was a game-changer for my anxiety. Visualizing Rama's journey helped me find inner strength."</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">
-              <img src="/api/placeholder/50/50" alt="Amit S.">
-            </div>
-            <div class="author-info">
-              <h4>Amit S.</h4>
-              <p>Anxiety Management, 38 sessions</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="testimonial-card">
-          <p class="testimonial-content">"Mindscape's forest walk feels like a real escape. My blood pressure has improved, and I feel calmer every day."</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">
-              <img src="/api/placeholder/50/50" alt="Sarah L.">
-            </div>
-            <div class="author-info">
-              <h4>Sarah L.</h4>
-              <p>Stress Relief, 25 sessions</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="testimonial-card">
-          <p class="testimonial-content">"The Quran experience brought me peace like never before. It's both spiritual and therapeutic."</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">
-              <img src="/api/placeholder/50/50" alt="Fatima A.">
-            </div>
-            <div class="author-info">
-              <h4>Fatima A.</h4>
-              <p>Emotional Wellness, 45 sessions</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- CTA Section -->
   <section class="cta">
     <div class="container">
       <div class="cta-content">
         <h2>Begin Your Healing Journey Today</h2>
-        <p>Join thousands who have transformed their mental wellness with Mindscape's immersive VR therapy. No headset required for mobile experiences.</p>
+        <p>Join us who have transformed their mental wellness with Mindscape's immersive VR therapy. </p>
         
         <div class="cta-buttons">
           <a href="#" class="btn btn-primary">Start 7-Day Free Trial</a>
@@ -1836,13 +1776,13 @@
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">Frequently Asked Questions</h2>
-        <p class="section-subtitle">Everything you need to know about Mindscape VR therapy</p>
+        <p class="section-subtitle">Everything you need to know about Mindpal VR therapy</p>
       </div>
       
       <div class="faq-container">
         <div class="faq-item">
           <div class="faq-question">
-            <span>Do I need a VR headset to use Mindscape?</span>
+            <span>Do I need a VR headset to use Mindpal?</span>
             <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
@@ -1862,7 +1802,7 @@
         
         <div class="faq-item">
           <div class="faq-question">
-            <span>Is Mindscape safe for children?</span>
+            <span>Is Mindpal safe for children?</span>
             <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
@@ -1872,7 +1812,7 @@
         
         <div class="faq-item">
           <div class="faq-question">
-            <span>What research supports Mindscape's VR therapy?</span>
+            <span>What research supports Mindpal's VR therapy?</span>
             <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
@@ -1888,7 +1828,7 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-col">
-          <div class="footer-logo">Mind<span>scape</span></div>
+          <div class="footer-logo">Mind<span>pal</span></div>
           <div class="footer-about">
             <p>Revolutionizing mental wellness with VR technology and ancient wisdom since 2020.</p>
           </div>
@@ -1925,9 +1865,10 @@
         <div class="footer-col">
           <h3>Contact</h3>
           <div class="footer-contact">
-            <p><i class="fas fa-map-marker-alt"></i> 123 Wellness Way, San Francisco, CA 94107</p>
-            <p><i class="fas fa-phone-alt"></i> +1 (800) 555-HEAL</p>
-            <p><i class="fas fa-envelope"></i> support@mindscapevr.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> 
+              Institute of Engineering and Management, Sector V, Salt Lake, Kolkata</p>
+            <p><i class="fas fa-phone-alt"></i> 6290277345</p>
+            <p><i class="fas fa-envelope"></i> mindpal2025@gmail.com</p>
           </div>
         </div>
       </div>
